@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Theater</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F1F1F2; /* Add a background color */
+        }
+
+        /* Header styles */
+        header {
+            background-color: #990011;
+            color: #121C2C;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Ensure proper positioning */
+            z-index: 99; /* Set a higher z-index than the about button */
+            display: flex;
+            align-items: center; /* Center items vertically */
+            justify-content: center; /* Center items horizontally */
+            position: auto;
+        }
+
+        /* Animation for golden shine outline */
+        .shining-outline {
+            text-shadow: 0 0 10px #FADA5E, 0 0 20px #FADA5E, 0 0 30px #FADA5E, 0 0 40px #FADA5E, 0 0 70px #FADA5E, 0 0 80px #FADA5E, 0 0 100px #FADA5E, 0 0 150px #FADA5E;
+        }
+
+        /* Main styles */
+        main {
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            flex-direction: column; /* Stack sections vertically */
+        }
+
+        /* Form styles */
+        form {
+            width: 80%; /* Adjust width */
+            max-width: 600px; /* Adjust max-width */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            text-align: center;
+        }
+
+        /* Style input fields and buttons */
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        button {
+            margin: 10px auto;
+            width: calc(50% - 5px); /* Adjust width */
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Submit button style */
+        button {
+            background-color: #990011;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #7a0000;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #2A3132; /* Light gray */
+            color: #F1F1F2; /* Dark gray */
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: relative; /* Ensure proper positioning */
+            z-index: 1; /* Set a lower z-index */
+        }
+
+        /* Icon style */
+        .fa-icon {
+            color: #990011;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .fa-icon:hover {
+            color: #7a0000;
+        }
+
+        /* Format selection styles */
+        .format-selection {
+            margin-top: 20px;
+        }
+
+        .format-selection button {
+            margin: 0 5px;
+            background-color: #990011;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .format-selection button:hover {
+            background-color: #7a0000;
+        }
+
+        /* Submission details */
+        #submission-details {
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+        }
+
+        /* Payment button */
+        .payment-button {
+            margin-top: 20px;
+        }
+
+        /* Generated price display */
+        #generated-price {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="shining-outline">Submit Your Theater Details</h1>
+    </header>
+    <main>
+        <form id="theater-form">
+            <div>
+                <input type="text" id="theater-name" name="theater-name" placeholder="Theater Name" required>
+                <i class="fas fa-theater-masks fa-icon" title="Theater Name"></i>
+            </div>
+            <div>
+                <input type="number" id="theater-capacity" name="theater-capacity" placeholder="Capacity" required>
+                <i class="fas fa-users fa-icon" title="Capacity"></i>
+            </div>
+            <div>
+                <input type="text" id="theater-address" name="theater-address" placeholder="Address" required>
+                <i class="fas fa-map-marker-alt fa-icon" title="Address"></i>
+                <a href="#" id="map-link" target="_blank"><i class="fas fa-map-marked fa-icon" title="View on Map"></i></a>
+            </div>
+            <div>
+                <input type="number" id="theater-price" name="theater-price" placeholder="Price" required>
+                <i class="fas fa-money-bill-wave fa-icon" title="Price"></i>
+            </div>
+            <div>
+                <input type="date" id="theater-date" name="theater-date" required>
+                <i class="far fa-calendar-alt fa-icon" title="Date"></i>
+            </div>
+            <div>
+                <input type="text" id="theater-timings" name="theater-timings" placeholder="Timings (Separate with commas)" required>
+                <i class="far fa-clock fa-icon" title="Timings"></i>
+            </div>
+            <div>
+                <input type="text" id="user-name" name="user-name" placeholder="Your Name" required>
+                <i class="fas fa-user fa-icon" title="Your Name"></i>
+            </div>
+            <div>
+                <input type="number" id="mobile-number" name="mobile-number" placeholder="Mobile Number" required>
+                <i class="fas fa-phone fa-icon" title="Mobile Number"></i>
+            </div>
+            <div>
+                <input type="email" id="email-address" name="email-address" placeholder="Email Address" required>
+                <i class="fas fa-envelope fa-icon" title="Email Address"></i>
+            </div>
+            <div class="format-selection">
+                <select id="payment-method" name="payment-method" required>
+                    <option value="" selected disabled>Select Payment Method</option>
+                    <option value="PhonePe">PhonePe</option>
+                    <option value="Google Pay">Google Pay</option>
+                    <option value="Paytm">Paytm</option>
+                </select>
+            </div>
+            <div class="payment-button">
+                <button type="button" id="continue-payment-btn">Continue to Payment</button>
+            </div>
+        </form>
+        <!-- Submission details -->
+        <div id="submission-details">
+            <!-- Submission details will be displayed here -->
+        </div>
+        <!-- Generated price display -->
+        <div id="generated-price"></div>
+    </main>
+    <footer>
+        <p>Designed and built by Your G.Thangella &copy; 2024. All rights reserved.</p>
+        <p>This website is protected by copyright law. Unauthorized use or modification of the code is prohibited.</p>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        // Event listener for form submission
+        document.getElementById('theater-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            var theaterName = document.getElementById('theater-name').value;
+            var theaterCapacity = document.getElementById('theater-capacity').value;
+            var theaterAddress = document.getElementById('theater-address').value;
+            var theaterPrice = document.getElementById('theater-price').value;
+            var theaterDate = document.getElementById('theater-date').value;
+            var theaterTimings = document.getElementById('theater-timings').value;
+            var userName = document.getElementById('user-name').value;
+            var mobileNumber = document.getElementById('mobile-number').value;
+            var emailAddress = document.getElementById('email-address').value;
+            var paymentMethod = document.getElementById('payment-method').value;
+
+            // Calculate price based on provided price and capacity
+            var generatedPrice = Math.floor(theaterPrice / theaterCapacity);
+            generatedPrice = Math.max(1000, Math.min(generatedPrice, 5000)); // Clamp price between 1000 and 5000
+
+            // Update submission details
+            document.getElementById('submission-details').innerHTML = `
+                <p><strong>Theater Name:</strong> ${theaterName}</p>
+                <p><strong>Capacity:</strong> ${theaterCapacity}</p>
+                <p><strong>Address:</strong> ${theaterAddress}</p>
+                <p><strong>Price:</strong> ${generatedPrice}</p>
+                <p><strong>Date:</strong> ${theaterDate}</p>
+                <p><strong>Timings:</strong> ${theaterTimings}</p>
+                <p><strong>Your Name:</strong> ${userName}</p>
+                <p><strong>Mobile Number:</strong> ${mobileNumber}</p>
+                <p><strong>Email Address:</strong> ${emailAddress}</p>
+            `;
+
+            // Show submission details
+            document.getElementById('submission-details').style.display = 'block';
+
+            // Show continue to payment button for selected methods
+            document.getElementById('continue-payment-btn').style.display = 'block';
+            document.getElementById('generated-price').innerHTML = `<p><strong>Generated Price:</strong> ${generatedPrice}</p>`;
+        });
+
+        // Event listener for continue to payment button click
+        document.getElementById('continue-payment-btn').addEventListener('click', function() {
+            var paymentMethod = document.getElementById('payment-method').value;
+            var upiId = '8008133117@ybl'; // Provide your UPI ID here
+
+            switch (paymentMethod) {
+                case 'PhonePe':
+                    window.location.href = 'https://www.phonepe.com/';
+                    break;
+                case 'Google Pay':
+                    window.location.href = 'https://pay.google.com/';
+                    break;
+                case 'Paytm':
+                    window.location.href = 'https://paytm.com/';
+                    break;
+                default:
+                    alert('Please select a valid payment method.');
+            }
+        });
+
+        // Event listener for map link click
+        document.getElementById('map-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            var theaterAddress = document.getElementById('theater-address').value;
+            window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURI(theaterAddress), '_blank');
+        });
+    </script>
+</body>
+</html>
