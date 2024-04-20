@@ -75,6 +75,11 @@
             background-color: #7a0000;
         }
 
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
         /* Footer styles */
         footer {
             background-color: #2A3132; /* Light gray */
@@ -150,11 +155,45 @@
         .details-box h2 {
             margin-top: 0;
         }
+
+        /* About popup */
+        #about-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        #about-popup-content {
+            background-color: #fff;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #close-about {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Submit Your Theater Details</h1>
+        <button id="preview-info-btn">Before Submitting Information, Read The Info Given Below</button> <!-- Added preview button -->
     </header>
     <main>
         <form id="theater-form">
@@ -163,15 +202,15 @@
                 <i class="fas fa-theater-masks fa-icon" title="Theater Name"></i>
             </div>
             <div>
-                <input type="number" id="theater-capacity" name="theater-capacity" placeholder="Seating Capacity" required>
+                <input type="number" id="theater-capacity" name="theater-capacity" placeholder="Seating Capacity" required min="1">
                 <i class="fas fa-users fa-icon" title="Seating Capacity"></i>
             </div>
             <div>
-                <input type="number" id="user-entered-amount" name="user-entered-amount" placeholder="Amount Entered by User" required>
+                <input type="number" id="user-entered-amount" name="user-entered-amount" placeholder="Amount Entered by User" required min="1">
                 <i class="fas fa-money-bill-wave fa-icon" title="Amount Entered by User"></i>
             </div>
             <div>
-                <input type="date" id="theater-date" name="theater-date" required>
+                <input type="date" id="theater-date" name="theater-date" required min="${new Date().toISOString().split('T')[0]}">
                 <i class="far fa-calendar-alt fa-icon" title="Date"></i>
             </div>
             <div>
@@ -180,24 +219,40 @@
             </div>
             <div>
                 <input type="text" id="theater-address" name="theater-address" placeholder="Address" required>
-                <i class="fas fa-map-marker-alt fa-icon" title="Address"></i>
-                <a href="#" id="map-link"><i class="fas fa-map-marked fa-icon" title="View on Map"></i></a>
+                <i class="fas fa-map-marker-alt fa-icon" title="Address" id="view-map"></i>
             </div>
             <div>
                 <input type="text" id="user-name" name="user-name" placeholder="Your Name" required>
                 <i class="fas fa-user fa-icon" title="Your Name"></i>
             </div>
             <div>
-                <input type="number" id="mobile-number" name="mobile-number" placeholder="Mobile Number" required>
+                <input type="tel" id="mobile-number" name="mobile-number" placeholder="Mobile Number" required pattern="[0-9]{10}">
                 <i class="fas fa-phone fa-icon" title="Mobile Number"></i>
             </div>
             <div>
                 <input type="email" id="email-address" name="email-address" placeholder="Email Address" required>
                 <i class="fas fa-envelope fa-icon" title="Email Address"></i>
             </div>
-            <button type="button" id="continue-payment-btn">Continue to Payment</button>
+            <button type="button" id="continue-payment-btn" disabled>Continue to Payment</button>
         </form>
 
+        <!-- About popup -->
+        <div id="about-popup">
+            <div id="about-popup-content">
+                <h3>Before Submitting Information, Read This</h3>
+                <p>If you want to list your theater on our site, please ensure the following:</p>
+                <ul>
+                    <li>Provide accurate and complete information in the form.</li>
+                    <li>Seating capacity and the amount entered by you will determine the price to list your theater.</li>
+                    <li>You Should Enter The Amount based On your Seating Capacity and the amount which will be favorable for that show and affordable for the people to book</li>
+                    <li>After payment, send the payment details to the email address provided below.</li>
+                    <li>Contact customer support at 1-800-123-4567 for further assistance.</li>
+                </ul>
+                <button id="close-about">Close</button>
+            </div>
+        </div>
+
+        <!-- Section for payment options -->
         <div class="interactive-section" id="payment-options">
             <div class="interactive-content">
                 <h2>Make Payment</h2>
@@ -218,6 +273,15 @@
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script>
+        // JavaScript code
+        document.getElementById('preview-info-btn').addEventListener('click', function(event) {
+            document.getElementById('about-popup').style.display = 'block';
+        });
+
+        document.getElementById('close-about').addEventListener('click', function(event) {
+            document.getElementById('about-popup').style.display = 'none';
+        });
+
         document.getElementById('continue-payment-btn').addEventListener('click', function(event) {
             var seatingCapacity = parseFloat(document.getElementById('theater-capacity').value.trim());
             var enteredAmount = parseFloat(document.getElementById('user-entered-amount').value.trim());
@@ -232,7 +296,7 @@
             // Generate random price between 1000 and 5000
             price = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
 
-           var upiId = '8008133117@ybl';
+            var upiId = '8008133117@ybl';
             var theaterName = encodeURIComponent(document.getElementById('theater-name').value.trim());
             var amount = price.toFixed(2);
             var qrCodeData = `upi://pay?pa=${upiId}&pn=${theaterName}&am=${amount}&cu=INR`;
@@ -267,6 +331,27 @@
             var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
             window.open(mapUrl, '_blank');
         });
+
+        // Enable/disable continue payment button based on form validation
+        function validateForm() {
+            var isValid = true;
+            var inputs = document.querySelectorAll('input[required]');
+            inputs.forEach(function(input) {
+                if (!input.value.trim()) {
+                    isValid = false;
+                }
+            });
+            document.getElementById('continue-payment-btn').disabled = !isValid;
+        }
+
+        var formInputs = document.querySelectorAll('input[required]');
+        formInputs.forEach(function(input) {
+            input.addEventListener('input', validateForm);
+        });
+
+        // Disable past dates in date picker
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('theater-date').setAttribute('min', today);
     </script>
 </body>
 </html>
