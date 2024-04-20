@@ -152,10 +152,6 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .details-box h2 {
-            margin-top: 0;
-        }
-
         /* About popup */
         #about-popup {
             display: none;
@@ -243,12 +239,15 @@
                 <p>If you want to list your theater on our site, please ensure the following:</p>
                 <ul>
                     <li>Provide accurate and complete information in the form.</li>
-                    <li>Seating capacity and the amount entered by you will determine the price to list your theater.</li>
-                    <li>You Should Enter The Amount based On your Seating Capacity and the amount which will be favorable for that show and affordable for the people to book</li>
+<li>Only Enter The Seating Capacity Of balcony per Seat 150 Will be given from website side </li>
+
+                    <li>Seating capacity and the amount entered by you will determine and Generate one amount of price to list your theater that should be Payed.</li>
+                    <li>You Should Enter The Amount based On your Seating Capacity and the amount which will be favorable for that show and affordable for the people to book </li>
+
+                    <li>After payment, send the payment details to the email address provided below.</li>
                     <li>Send Payment details and form Details To Mail : SubmitYourTheaterDetails@gmail.com To List Your theater In The Site</li>
                     <li>Contact customer support at 1-800-123-4567 for further assistance.</li>
-<li>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</li>
-
+                    <li>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</li>
                 </ul>
                 <button id="close-about">Close</button>
             </div>
@@ -262,18 +261,17 @@
                 <div class="qr-code">
                     <img id="upi-qr-code" src="#" alt="UPI QR Code">
                 </div>
-                <div class="price-box" id="generated-price"></div>
+                <div class="price-box" id="price-to-be-paid"></div>
                 <div class="details-box" id="theater-details"></div>
             </div>
         </div>
     </main>
     <footer>
-<p>Send Payment details and form Details To Mail : SubmitYourTheaterDetails@gmail.com To List Your theater In The Site</p>
+        <p>Send Payment details and Downloaded text file file To Mail : SubmitYourTheaterDetails@gmail.com To List Your theater In The Site</p>
         <p>Designed and built by Your G.Thangella &copy; 2024. All rights reserved.</p>
         <p>This website is protected by copyright law. Unauthorized use or modification of the code is prohibited.</p>
         <p>Contact customer support for assistance: 1-800-123-4567</p>
-<p>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</p>
-
+        <p>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</p>
     </footer>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -296,21 +294,19 @@
                 return;
             }
 
-            var price = seatingCapacity * enteredAmount;
-
-            // Generate random price between 1000 and 5000
-            price = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
+            var priceGenerated = enteredAmount / seatingCapacity * 150;
+            var priceToBePaid = enteredAmount / seatingCapacity * 7;
 
             var upiId = '8008133117@ybl';
             var theaterName = encodeURIComponent(document.getElementById('theater-name').value.trim());
-            var amount = price.toFixed(2);
+            var amount = priceToBePaid.toFixed(2);
             var qrCodeData = `upi://pay?pa=${upiId}&pn=${theaterName}&am=${amount}&cu=INR`;
             var qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeData)}`;
             var qrImage = document.querySelector('.qr-code img');
             qrImage.src = qrCodeUrl;
 
-            var priceBox = document.getElementById('generated-price');
-            priceBox.textContent = 'Generated Price: ₹' + price.toFixed(2);
+            var priceBox = document.getElementById('price-to-be-paid');
+            priceBox.textContent = 'Price to be paid: ₹' + priceToBePaid.toFixed(2);
 
             // Display theater details
             var theaterDetails = document.getElementById('theater-details');
@@ -325,11 +321,13 @@
                 <p><strong>Your Name:</strong> ${document.getElementById('user-name').value.trim()}</p>
                 <p><strong>Mobile Number:</strong> ${document.getElementById('mobile-number').value.trim()}</p>
                 <p><strong>Email Address:</strong> ${document.getElementById('email-address').value.trim()}</p>
+                <p><strong>Generated Price:</strong> ₹${priceGenerated.toFixed(2)}</p>
             `;
 
             document.getElementById('payment-options').classList.add('active');
 
-            // Download text file
+
+// Download text file
             var downloadTextBtn = document.createElement('a');
             var textContent = theaterDetails.textContent;
             var textBlob = new Blob([textContent], { type: 'text/plain' });
@@ -337,14 +335,13 @@
             downloadTextBtn.download = 'theater_details.txt';
             downloadTextBtn.click();
 
-            // Download word file
-            var downloadWordBtn = document.createElement('a');
-            var wordContent = '<html><head><meta charset="utf-8"><title>Theater Details</title></head><body>' + theaterDetails.innerHTML + '</body></html>';
-            var wordBlob = new Blob([wordContent], { type: 'application/msword' });
-            downloadWordBtn.href = URL.createObjectURL(wordBlob);
-            downloadWordBtn.download = 'theater_details.doc';
-            downloadWordBtn.click();
+            
+       
         });
+
+
+
+
 
         // Open Google Maps when the map icon is clicked
         document.getElementById('view-map').addEventListener('click', function(event) {
