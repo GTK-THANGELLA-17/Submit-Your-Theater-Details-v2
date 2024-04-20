@@ -17,21 +17,15 @@
         /* Header styles */
         header {
             background-color: #990011;
-            color: #121C2C;
+            color: #fff;
             padding: 20px;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative; /* Ensure proper positioning */
-            z-index: 99; /* Set a higher z-index than the about button */
-            display: flex;
-            align-items: center; /* Center items vertically */
-            justify-content: center; /* Center items horizontally */
-            position: auto;
         }
 
-        /* Animation for golden shine outline */
-        .shining-outline {
-            text-shadow: 0 0 10px #FADA5E, 0 0 20px #FADA5E, 0 0 30px #FADA5E, 0 0 40px #FADA5E, 0 0 70px #FADA5E, 0 0 80px #FADA5E, 0 0 100px #FADA5E, 0 0 150px #FADA5E;
+        h1 {
+            margin: 0;
+            font-size: 32px;
         }
 
         /* Main styles */
@@ -51,29 +45,29 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-            z-index: 9999;
-            text-align: center;
+            text-align: left;
         }
 
-        /* Style input fields and buttons */
         input[type="text"],
         input[type="number"],
         input[type="date"],
-        select,
-        button {
-            margin: 10px auto;
-            width: calc(50% - 5px); /* Adjust width */
+        select {
+            width: 100%;
             padding: 10px;
-            font-size: 16px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
-        /* Submit button style */
         button {
             background-color: #990011;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
             transition: background-color 0.3s ease;
         }
 
@@ -88,14 +82,12 @@
             padding: 20px;
             text-align: center;
             width: 100%;
-            position: relative; /* Ensure proper positioning */
-            z-index: 1; /* Set a lower z-index */
         }
 
         /* Icon style */
         .fa-icon {
             color: #990011;
-            margin-left: 5px;
+            margin-right: 5px;
             cursor: pointer;
             transition: color 0.3s ease;
         }
@@ -104,48 +96,65 @@
             color: #7a0000;
         }
 
-        /* Format selection styles */
-        .format-selection {
+        /* Interactive section */
+        .interactive-section {
             margin-top: 20px;
-        }
-
-        .format-selection button {
-            margin: 0 5px;
-            background-color: #990011;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .format-selection button:hover {
-            background-color: #7a0000;
-        }
-
-        /* Submission details */
-        #submission-details {
-            margin-top: 20px;
-            text-align: left;
             display: none;
         }
 
-        /* Payment button */
-        .payment-button {
-            margin-top: 20px;
+        .interactive-section.active {
+            display: block;
         }
 
-        /* Generated price display */
-        #generated-price {
+        .interactive-content {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .interactive-content h2 {
+            margin-top: 0;
+        }
+
+        /* QR code */
+        .qr-code {
             margin-top: 20px;
-            font-weight: bold;
-            font-size: 18px;
+            text-align: center;
+        }
+
+        .qr-code img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Generated price box */
+        .price-box {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Details box */
+        .details-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-box h2 {
+            margin-top: 0;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1 class="shining-outline">Submit Your Theater Details</h1>
+        <h1>Submit Your Theater Details</h1>
     </header>
     <main>
         <form id="theater-form">
@@ -154,17 +163,12 @@
                 <i class="fas fa-theater-masks fa-icon" title="Theater Name"></i>
             </div>
             <div>
-                <input type="number" id="theater-capacity" name="theater-capacity" placeholder="Capacity" required>
-                <i class="fas fa-users fa-icon" title="Capacity"></i>
+                <input type="number" id="theater-capacity" name="theater-capacity" placeholder="Seating Capacity" required>
+                <i class="fas fa-users fa-icon" title="Seating Capacity"></i>
             </div>
             <div>
-                <input type="text" id="theater-address" name="theater-address" placeholder="Address" required>
-                <i class="fas fa-map-marker-alt fa-icon" title="Address"></i>
-                <a href="#" id="map-link" target="_blank"><i class="fas fa-map-marked fa-icon" title="View on Map"></i></a>
-            </div>
-            <div>
-                <input type="number" id="theater-price" name="theater-price" placeholder="Price" required>
-                <i class="fas fa-money-bill-wave fa-icon" title="Price"></i>
+                <input type="number" id="user-entered-amount" name="user-entered-amount" placeholder="Amount Entered by User" required>
+                <i class="fas fa-money-bill-wave fa-icon" title="Amount Entered by User"></i>
             </div>
             <div>
                 <input type="date" id="theater-date" name="theater-date" required>
@@ -173,6 +177,11 @@
             <div>
                 <input type="text" id="theater-timings" name="theater-timings" placeholder="Timings (Separate with commas)" required>
                 <i class="far fa-clock fa-icon" title="Timings"></i>
+            </div>
+            <div>
+                <input type="text" id="theater-address" name="theater-address" placeholder="Address" required>
+                <i class="fas fa-map-marker-alt fa-icon" title="Address"></i>
+                <a href="#" id="map-link"><i class="fas fa-map-marked fa-icon" title="View on Map"></i></a>
             </div>
             <div>
                 <input type="text" id="user-name" name="user-name" placeholder="Your Name" required>
@@ -186,98 +195,77 @@
                 <input type="email" id="email-address" name="email-address" placeholder="Email Address" required>
                 <i class="fas fa-envelope fa-icon" title="Email Address"></i>
             </div>
-            <div class="format-selection">
-                <select id="payment-method" name="payment-method" required>
-                    <option value="" selected disabled>Select Payment Method</option>
-                    <option value="PhonePe">PhonePe</option>
-                    <option value="Google Pay">Google Pay</option>
-                    <option value="Paytm">Paytm</option>
-                </select>
-            </div>
-            <div class="payment-button">
-                <button type="button" id="continue-payment-btn">Continue to Payment</button>
-            </div>
+            <button type="button" id="continue-payment-btn">Continue to Payment</button>
         </form>
-        <!-- Submission details -->
-        <div id="submission-details">
-            <!-- Submission details will be displayed here -->
+
+        <div class="interactive-section" id="payment-options">
+            <div class="interactive-content">
+                <h2>Make Payment</h2>
+                <p>Scan the QR code below to make payment via UPI:</p>
+                <div class="qr-code">
+                    <img id="upi-qr-code" src="#" alt="UPI QR Code">
+                </div>
+                <div class="price-box" id="generated-price"></div>
+                <div class="details-box" id="theater-details"></div>
+            </div>
         </div>
-        <!-- Generated price display -->
-        <div id="generated-price"></div>
     </main>
     <footer>
         <p>Designed and built by Your G.Thangella &copy; 2024. All rights reserved.</p>
         <p>This website is protected by copyright law. Unauthorized use or modification of the code is prohibited.</p>
+        <p>Contact customer support for assistance: 1-800-123-4567</p>
     </footer>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script>
-        // Event listener for form submission
-        document.getElementById('theater-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+        document.getElementById('continue-payment-btn').addEventListener('click', function(event) {
+            var seatingCapacity = parseFloat(document.getElementById('theater-capacity').value.trim());
+            var enteredAmount = parseFloat(document.getElementById('user-entered-amount').value.trim());
 
-            // Get form values
-            var theaterName = document.getElementById('theater-name').value;
-            var theaterCapacity = document.getElementById('theater-capacity').value;
-            var theaterAddress = document.getElementById('theater-address').value;
-            var theaterPrice = document.getElementById('theater-price').value;
-            var theaterDate = document.getElementById('theater-date').value;
-            var theaterTimings = document.getElementById('theater-timings').value;
-            var userName = document.getElementById('user-name').value;
-            var mobileNumber = document.getElementById('mobile-number').value;
-            var emailAddress = document.getElementById('email-address').value;
-            var paymentMethod = document.getElementById('payment-method').value;
+            if (isNaN(seatingCapacity) || seatingCapacity <= 0 || isNaN(enteredAmount) || enteredAmount <= 0) {
+                alert('Please enter valid values for seating capacity and amount.');
+                return;
+            }
 
-            // Calculate price based on provided price and capacity
-            var generatedPrice = Math.floor(theaterPrice / theaterCapacity);
-            generatedPrice = Math.max(1000, Math.min(generatedPrice, 5000)); // Clamp price between 1000 and 5000
+            var price = seatingCapacity * enteredAmount;
 
-            // Update submission details
-            document.getElementById('submission-details').innerHTML = `
-                <p><strong>Theater Name:</strong> ${theaterName}</p>
-                <p><strong>Capacity:</strong> ${theaterCapacity}</p>
-                <p><strong>Address:</strong> ${theaterAddress}</p>
-                <p><strong>Price:</strong> ${generatedPrice}</p>
-                <p><strong>Date:</strong> ${theaterDate}</p>
-                <p><strong>Timings:</strong> ${theaterTimings}</p>
-                <p><strong>Your Name:</strong> ${userName}</p>
-                <p><strong>Mobile Number:</strong> ${mobileNumber}</p>
-                <p><strong>Email Address:</strong> ${emailAddress}</p>
+            // Generate random price between 1000 and 5000
+            price = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
+
+           var upiId = '8008133117@ybl';
+            var theaterName = encodeURIComponent(document.getElementById('theater-name').value.trim());
+            var amount = price.toFixed(2);
+            var qrCodeData = `upi://pay?pa=${upiId}&pn=${theaterName}&am=${amount}&cu=INR`;
+            var qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeData)}`;
+            var qrImage = document.querySelector('.qr-code img');
+            qrImage.src = qrCodeUrl;
+
+            var priceBox = document.getElementById('generated-price');
+            priceBox.textContent = 'Generated Price: ₹' + price.toFixed(2);
+
+            // Display theater details
+            var theaterDetails = document.getElementById('theater-details');
+            theaterDetails.innerHTML = `
+                <h2>Theater Details</h2>
+                <p><strong>Theater Name:</strong> ${document.getElementById('theater-name').value.trim()}</p>
+                <p><strong>Seating Capacity:</strong> ${seatingCapacity}</p>
+                <p><strong>Amount Entered:</strong> ₹${enteredAmount.toFixed(2)}</p>
+                <p><strong>Date:</strong> ${document.getElementById('theater-date').value}</p>
+                <p><strong>Timings:</strong> ${document.getElementById('theater-timings').value}</p>
+                <p><strong>Address:</strong> ${document.getElementById('theater-address').value.trim()} <i class="fas fa-map-marker-alt fa-icon" id="view-map" title="View on Map"></i></p>
+                <p><strong>Your Name:</strong> ${document.getElementById('user-name').value.trim()}</p>
+                <p><strong>Mobile Number:</strong> ${document.getElementById('mobile-number').value.trim()}</p>
+                <p><strong>Email Address:</strong> ${document.getElementById('email-address').value.trim()}</p>
             `;
 
-            // Show submission details
-            document.getElementById('submission-details').style.display = 'block';
-
-            // Show continue to payment button for selected methods
-            document.getElementById('continue-payment-btn').style.display = 'block';
-            document.getElementById('generated-price').innerHTML = `<p><strong>Generated Price:</strong> ${generatedPrice}</p>`;
+            document.getElementById('payment-options').classList.add('active');
         });
 
-        // Event listener for continue to payment button click
-        document.getElementById('continue-payment-btn').addEventListener('click', function() {
-            var paymentMethod = document.getElementById('payment-method').value;
-            var upiId = '8008133117@ybl'; // Provide your UPI ID here
-
-            switch (paymentMethod) {
-                case 'PhonePe':
-                    window.location.href = 'https://www.phonepe.com/';
-                    break;
-                case 'Google Pay':
-                    window.location.href = 'https://pay.google.com/';
-                    break;
-                case 'Paytm':
-                    window.location.href = 'https://paytm.com/';
-                    break;
-                default:
-                    alert('Please select a valid payment method.');
-            }
-        });
-
-        // Event listener for map link click
-        document.getElementById('map-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            var theaterAddress = document.getElementById('theater-address').value;
-            window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURI(theaterAddress), '_blank');
+        // Open Google Maps when the map icon is clicked
+        document.getElementById('view-map').addEventListener('click', function(event) {
+            var address = document.getElementById('theater-address').value.trim();
+            var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+            window.open(mapUrl, '_blank');
         });
     </script>
 </body>
