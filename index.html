@@ -245,8 +245,7 @@
                     <li>Provide accurate and complete information in the form.</li>
                     <li>Seating capacity and the amount entered by you will determine the price to list your theater.</li>
                     <li>You Should Enter The Amount based On your Seating Capacity and the amount which will be favorable for that show and affordable for the people to book</li>
-                    <li>After payment, send the payment details to the email address provided below.</li>
-<li>Send Payment details and form Details To Mail : SubmitYourTheaterDetails@gmail.com To List Your theater In The Site</li>
+                    <li>Send Payment details and form Details To Mail : SubmitYourTheaterDetails@gmail.com To List Your theater In The Site</li>
                     <li>Contact customer support at 1-800-123-4567 for further assistance.</li>
 <li>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</li>
 
@@ -329,6 +328,22 @@
             `;
 
             document.getElementById('payment-options').classList.add('active');
+
+            // Download text file
+            var downloadTextBtn = document.createElement('a');
+            var textContent = theaterDetails.textContent;
+            var textBlob = new Blob([textContent], { type: 'text/plain' });
+            downloadTextBtn.href = URL.createObjectURL(textBlob);
+            downloadTextBtn.download = 'theater_details.txt';
+            downloadTextBtn.click();
+
+            // Download word file
+            var downloadWordBtn = document.createElement('a');
+            var wordContent = '<html><head><meta charset="utf-8"><title>Theater Details</title></head><body>' + theaterDetails.innerHTML + '</body></html>';
+            var wordBlob = new Blob([wordContent], { type: 'application/msword' });
+            downloadWordBtn.href = URL.createObjectURL(wordBlob);
+            downloadWordBtn.download = 'theater_details.doc';
+            downloadWordBtn.click();
         });
 
         // Open Google Maps when the map icon is clicked
