@@ -194,39 +194,56 @@
     <main>
         <form id="theater-form">
             <div>
+                 <i class="fas fa-theater-masks fa-icon" title="Theater Name"></i>
                 <input type="text" id="theater-name" name="theater-name" placeholder="Your Theater Name" required>
-                <i class="fas fa-theater-masks fa-icon" title="Theater Name"></i>
+                
             </div>
             <div>
+<i class="fas fa-users fa-icon" title="Seating Capacity"></i>
+
                 <input type="number" id="theater-capacity" name="theater-capacity" placeholder="Your Theater Balcony Seating Capacity" required min="1">
-                <i class="fas fa-users fa-icon" title="Seating Capacity"></i>
+<ul>
+ <li>Only Balcony Seating Capacity Should Be Entered . Dont Enter Your Theater Full Seating Capacity</li>
+</ul>
+     
+                
             </div>
             <div>
-                <input type="number" id="user-entered-amount" name="user-entered-amount" placeholder="Enter The Amount You Want From Booking Person For Your Theater" required min="1">
                 <i class="fas fa-money-bill-wave fa-icon" title="Amount Entered by User"></i>
+                <input type="number" id="user-entered-amount" name="user-entered-amount" placeholder="Enter The Amount You Want From Booking Person To Pay For Your Theater For booking" required min="1">
+                
             </div>
             <div>
-                <input type="date" id="theater-date" name="theater-date" required min="${new Date().toISOString().split('T')[0]}">
                 <i class="far fa-calendar-alt fa-icon" title="Date"></i>
+                <input type="date" id="theater-date" name="theater-date" required min="${new Date().toISOString().split('T')[0]}">
+                
             </div>
             <div>
-                <input type="text" id="theater-timings" name="theater-timings" placeholder="Timings (Separate with commas)" required>
-                <i class="far fa-clock fa-icon" title="Timings"></i>
+<i class="far fa-clock fa-icon" title="Timings"></i>
+
+                <input type="text" id="theater-timings" name="theater-timings" placeholder="Enter Timings (Separate with commas)" required>
+<ul>
+ <li>Enter Timings Of Your Theater When It Will Be Available For People To Book (Separate with commas Ex:00:00 AM/PM Dont Enter 24hrs Time)</li>
+</ul>
+                
+
             </div>
             <div>
-                <input type="text" id="theater-address" name="theater-address" placeholder="Address" required>
                 <i class="fas fa-map-marker-alt fa-icon" title="Address" id="view-map"></i>
+                <input type="text" id="theater-address" name="theater-address" placeholder="Enter Your Theater Address" required>
+                
             </div>
             <div>
-                <input type="text" id="user-name" name="user-name" placeholder="Your Name" required>
                 <i class="fas fa-user fa-icon" title="Your Name"></i>
+                <input type="text" id="user-name" name="user-name" placeholder="Your Name" required>
+                
             </div>
             <div>
                 <input type="tel" id="mobile-number" name="mobile-number" placeholder="Mobile Number" required pattern="[0-9]{10}">
                 <i class="fas fa-phone fa-icon" title="Mobile Number"></i>
             </div>
             <div>
-                <input type="email" id="email-address" name="email-address" placeholder="Email Address" required>
+                <input type="email" id="email-address" name="email-address" placeholder="Email Address (Gmail only)" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com$">
                 <i class="fas fa-envelope fa-icon" title="Email Address"></i>
             </div>
             <button type="button" id="continue-payment-btn" disabled>Continue to Payment</button>
