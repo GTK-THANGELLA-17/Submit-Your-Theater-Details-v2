@@ -303,13 +303,19 @@
         });
 
         document.getElementById('continue-payment-btn').addEventListener('click', function(event) {
-            var seatingCapacity = parseFloat(document.getElementById('theater-capacity').value.trim());
-            var enteredAmount = parseFloat(document.getElementById('user-entered-amount').value.trim());
+    var seatingCapacity = parseFloat(document.getElementById('theater-capacity').value.trim());
+    var enteredAmount = parseFloat(document.getElementById('user-entered-amount').value.trim());
 
-            if (isNaN(seatingCapacity) || seatingCapacity <= 0 || isNaN(enteredAmount) || enteredAmount <= 0) {
-                alert('Please enter valid values for seating capacity and amount.');
-                return;
-            }
+    if (isNaN(seatingCapacity) || seatingCapacity <= 0 || isNaN(enteredAmount) || enteredAmount <= 0) {
+        alert('Please enter valid values for seating capacity and amount.');
+        return;
+    }
+
+    // Check if entered amount exceeds 50000
+    if (enteredAmount > 50000) {
+        alert('The entered amount cannot exceed 50000.');
+        return;
+    }
 
             var priceGenerated = enteredAmount / seatingCapacity * 150;
             var priceToBePaid = enteredAmount / seatingCapacity * 7;
@@ -323,7 +329,7 @@
             qrImage.src = qrCodeUrl;
 
             var priceBox = document.getElementById('price-to-be-paid');
-            priceBox.textContent = 'Price to be paid: ₹' + priceToBePaid.toFixed(2);
+            priceBox.textContent = 'Price to be paid: ₹' + priceToBePaid.toFixed(2) ;
 
             // Display theater details
             var theaterDetails = document.getElementById('theater-details');
@@ -355,10 +361,6 @@
             
        
         });
-
-
-
-
 
         // Open Google Maps when the map icon is clicked
         document.getElementById('view-map').addEventListener('click', function(event) {
