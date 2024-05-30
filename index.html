@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Theater</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         /* Global styles */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #F1F1F2; /* Add a background color */
+            font-family: 'Roboto', sans-serif;
+            background-color: #F1F1F2;
         }
 
         /* Header styles */
@@ -23,56 +22,87 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        header h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* Main styles */
         main {
             padding: 20px;
             display: flex;
-            justify-content: center; /* Center content horizontally */
-            align-items: center; /* Center content vertically */
-            flex-direction: column; /* Stack sections vertically */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
-        /* Form styles */
-        form {
-            width: 80%; /* Adjust width */
-            max-width: 600px; /* Adjust max-width */
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-            text-align: left;
-        }
+       /* Form styles */
+form {
+    width: 100%;
+    max-width: 800px; /* Increased max-width for wider form */
+    background: #fff;
+    padding: 40px; /* Increased padding for more spacing */
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-        input[type="text"],
-        input[type="number"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+.form-group {
+    position: relative;
+    margin-bottom: 20px; /* Increased margin between form groups */
+}
+
+.form-group i {
+    position: absolute;
+    top: 50%;
+    left: 15px; /* Adjusted left spacing for icons */
+    transform: translateY(-50%);
+    color: #990011;
+    transition: color 0.3s ease;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="tel"],
+input[type="email"] {
+    width: calc(100% - 40px); /* Adjusted input width to accommodate wider form */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-left: 40px; /* Added margin to the left of input fields */
+}
+
+button {
+    margin-top: 20px; /* Increased margin between form and button */
+}
+
+
+        input:focus {
+            border-color: #990011;
+            box-shadow: 0 0 5px rgba(153, 0, 17, 0.3);
         }
 
         button {
-            background-color:#303030 ;
+            background-color: #303030;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             padding: 10px 20px;
             font-size: 16px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         button:hover {
             background-color: #7a0000;
+            transform: translateY(-2px);
         }
 
         button:disabled {
@@ -82,8 +112,8 @@
 
         /* Footer styles */
         footer {
-            background-color: #2A3132; /* Light gray */
-            color: #F1F1F2; /* Dark gray */
+            background-color: #2A3132;
+            color: #F1F1F2;
             padding: 20px;
             text-align: center;
             width: 100%;
@@ -91,7 +121,6 @@
 
         /* Icon style */
         .fa-icon {
-            color: #990011;
             margin-right: 5px;
             cursor: pointer;
             transition: color 0.3s ease;
@@ -151,122 +180,83 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        /* About popup */
-        #about-popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #FFFFFF ;
-            z-index: 999;
-        }
-
-        #about-popup-content {
-            background-color: #fff;
-            width: 80%;
-            max-width: 600px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        #close-about {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            color: #666;
-        }
     </style>
 </head>
 <body>
     <header>
         <h1>Submit Your Theater Details</h1>
-        <button id="preview-info-btn">Before Submitting Information, Read The Info Given Below</button> <!-- Added preview button -->
+        <button id="preview-info-btn" class="btn btn-light" data-toggle="modal" data-target="#aboutModal">Before Submitting Information, Read The Info Given Below</button>
     </header>
     <main>
         <form id="theater-form">
-            <div>
-                 <i class="fas fa-theater-masks fa-icon" title="Theater Name"></i>
-                <input type="text" id="theater-name" name="theater-name" placeholder="Your Theater Name" required>
-                
+            <div class="form-group">
+                <i class="fas fa-theater-masks fa-icon"></i>
+                <input type="text" class="form-control" id="theater-name" name="theater-name" placeholder="Your Theater Name" required>
             </div>
-            <div>
-<i class="fas fa-users fa-icon" title="Seating Capacity"></i>
-
-                <input type="number" id="theater-capacity" name="theater-capacity" placeholder="Your Theater Balcony Seating Capacity" required min="1">
-<ul>
- <li>Only Balcony Seating Capacity Should Be Entered . Dont Enter Your Theater Full Seating Capacity</li>
-</ul>
-     
-                
+            <div class="form-group">
+                <i class="fas fa-users fa-icon"></i>
+                <input type="number" class="form-control" id="theater-capacity" name="theater-capacity" placeholder="Your Theater Balcony Seating Capacity" required min="1">
+                <small class="form-text text-muted">Only Balcony Seating Capacity Should Be Entered. Don't Enter Your Theater Full Seating Capacity.</small>
             </div>
-            <div>
-                <i class="fas fa-money-bill-wave fa-icon" title="Amount Entered by User"></i>
-                <input type="number" id="user-entered-amount" name="user-entered-amount" placeholder="Enter The Amount You Want From Booking Person To Pay For Your Theater For booking" required min="1">
-                
+            <div class="form-group">
+                <i class="fas fa-money-bill-wave fa-icon"></i>
+                <input type="number" class="form-control" id="user-entered-amount" name="user-entered-amount" placeholder="Enter The Amount You Want From Booking Person To Pay For Your Theater For Booking" required min="1">
             </div>
-            <div>
-                <i class="far fa-calendar-alt fa-icon" title="Date"></i>
-                <input type="date" id="theater-date" name="theater-date" required min="${new Date().toISOString().split('T')[0]}">
-                
+            <div class="form-group">
+                <i class="far fa-calendar-alt fa-icon"></i>
+                <input type="date" class="form-control" id="theater-date" name="theater-date" required min="${new Date().toISOString().split('T')[0]}">
             </div>
-            <div>
-<i class="far fa-clock fa-icon" title="Timings"></i>
-
-                <input type="text" id="theater-timings" name="theater-timings" placeholder="Enter Timings (Separate with commas)" required>
-<ul>
- <li>Enter Timings Of Your Theater When It Will Be Available For People To Book (Separate with commas Ex:00:00 AM/PM Dont Enter 24hrs Time)</li>
-</ul>
-                
-
+            <div class="form-group">
+                <i class="far fa-clock fa-icon"></i>
+                <input type="text" class="form-control" id="theater-timings" name="theater-timings" placeholder="Enter Timings (Separate with commas)" required>
+                <small class="form-text text-muted">Enter Timings Of Your Theater When It Will Be Available For People To Book (Separate with commas Ex: 00:00 AM/PM Don't Enter 24hrs Time).</small>
             </div>
-            <div>
-                <i class="fas fa-map-marker-alt fa-icon" title="Address" id="view-map"></i>
-                <input type="text" id="theater-address" name="theater-address" placeholder="Enter Your Theater Address" required>
-                
+            <div class="form-group">
+                <i class="fas fa-map-marker-alt fa-icon"></i>
+                <input type="text" class="form-control" id="theater-address" name="theater-address" placeholder="Enter Your Theater Address" required>
             </div>
-            <div>
-                <i class="fas fa-user fa-icon" title="Your Name"></i>
-                <input type="text" id="user-name" name="user-name" placeholder="Your Name" required>
-                
+            <div class="form-group">
+                <i class="fas fa-user fa-icon"></i>
+                <input type="text" class="form-control" id="user-name" name="user-name" placeholder="Your Name" required>
             </div>
-            <div>
-                <input type="tel" id="mobile-number" name="mobile-number" placeholder="Mobile Number" required pattern="[0-9]{10}">
-                <i class="fas fa-phone fa-icon" title="Mobile Number"></i>
+            <div class="form-group">
+                <i class="fas fa-phone fa-icon"></i>
+                <input type="tel" class="form-control" id="mobile-number" name="mobile-number" placeholder="Mobile Number" required pattern="[0-9]{10}">
             </div>
-            <div>
-                <input type="email" id="email-address" name="email-address" placeholder="Email Address (Gmail only)" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com$">
-                <i class="fas fa-envelope fa-icon" title="Email Address"></i>
+            <div class="form-group">
+                <i class="fas fa-envelope fa-icon"></i>
+                <input type="email" class="form-control" id="email-address" name="email-address" placeholder="Email Address (Gmail only)" required pattern="[a-zA-Z0-9._%+-]+@gmail\.com$">
             </div>
-            <button type="button" id="continue-payment-btn" disabled>Continue to Payment</button>
+            <button type="button" class="btn btn-dark" id="continue-payment-btn" disabled>Continue to Payment</button>
         </form>
 
-        <!-- About popup -->
-        <div id="about-popup">
-            <div id="about-popup-content">
-                <h3>Before Submitting Information, Read This</h3>
-                <p>If you want to list your theater on our site, please ensure the following:</p>
-                <ul>
-                    <li>Provide accurate and complete information in the form.</li>
-<li>Only Enter The Seating Capacity Of balcony per Seat 150 Will be given from website side </li>
-
-                    <li>Seating capacity and the amount entered by you will determine and Generate one amount of price to list your theater that should be Payed.</li>
-                    <li>You Should Enter The Amount based On your Seating Capacity and the amount which will be favorable for that show and affordable for the people to book </li>
-
-                    <li>After payment, send the payment details to the email address provided below.</li>
-                    <li>Send Payment details and form Details To Mail : SubmitYourTheaterDetails@gmail.com To List Your theater In The Site</li>
-                    <li>Contact customer support at 1-800-123-4567 for further assistance.</li>
-                    <li>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</li>
-                </ul>
-                <button id="close-about">Close</button>
+        <!-- About modal -->
+        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="aboutModalLabel">Before Submitting Information, Read This</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>If you want to list your theater on our site, please ensure the following:</p>
+                        <ul>
+                            <li>Provide accurate and complete information in the form.</li>
+                            <li>Only Enter The Seating Capacity Of balcony per Seat 150 Will be given from website side.</li>
+                            <li>Seating capacity and the amount entered by you will determine and Generate one amount of price to list your theater that should be Paid.</li>
+                            <li>You Should Enter The Amount based On your Seating Capacity and the amount which will be favorable for that show and affordable for the people to book.</li>
+                            <li>After payment, send the payment details to the email address provided below.</li>
+                            <li>Send Payment details and form Details To Mail: SubmitYourTheaterDetails@gmail.com To List Your Theater In The Site.</li>
+                            <li>Contact customer support at 1-800-123-4567 for further assistance.</li>
+                            <li>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -282,27 +272,65 @@
                 <div class="details-box" id="theater-details"></div>
             </div>
         </div>
+
     </main>
     <footer>
-        <p>Send Payment details and Downloaded text file file To Mail : SubmitYourTheaterDetails@gmail.com To List Your theater In The Site</p>
+        <p>Send Payment details and Downloaded text file file To Mail: SubmitYourTheaterDetails@gmail.com To List Your Theater In The Site</p>
         <p>Designed and built by Your G.Thangella &copy; 2024. All rights reserved.</p>
         <p>This website is protected by copyright law. Unauthorized use or modification of the code is prohibited.</p>
         <p>Contact customer support for assistance: 1-800-123-4567</p>
         <p>Contact customer support for assistance: SubmitYourTheaterDetails@gmail.com</p>
     </footer>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // JavaScript code
-        document.getElementById('preview-info-btn').addEventListener('click', function(event) {
-            document.getElementById('about-popup').style.display = 'block';
-        });
 
-        document.getElementById('close-about').addEventListener('click', function(event) {
-            document.getElementById('about-popup').style.display = 'none';
-        });
+// Function to validate email format
+function validateEmail(email) {
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
 
-        document.getElementById('continue-payment-btn').addEventListener('click', function(event) {
+// Function to generate a unique code
+function generateUniqueCode() {
+    // Generate a random alphanumeric code
+    var uniqueCode = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 8; i++) {
+        uniqueCode += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return uniqueCode;
+}
+
+// Function to enable/disable continue payment button based on form validation
+function validateForm() {
+    var isValid = true;
+    var inputs = document.querySelectorAll('input[required]');
+    inputs.forEach(function(input) {
+        if (!input.value.trim()) {
+            isValid = false;
+        }
+        if (input.type === 'number' && parseFloat(input.value) <= 0) {
+            isValid = false;
+        }
+        if (input.type === 'email' && !validateEmail(input.value)) {
+            isValid = false;
+        }
+    });
+    document.getElementById('continue-payment-btn').disabled = !isValid;
+}
+
+// Event listener for form inputs to trigger form validation
+var formInputs = document.querySelectorAll('input[required]');
+formInputs.forEach(function(input) {
+    input.addEventListener('input', validateForm);
+});
+
+// Event listener for "Continue to Payment" button
+document.getElementById('continue-payment-btn').addEventListener('click', function() {
     var seatingCapacity = parseFloat(document.getElementById('theater-capacity').value.trim());
     var enteredAmount = parseFloat(document.getElementById('user-entered-amount').value.trim());
 
@@ -311,84 +339,87 @@
         return;
     }
 
-    // Check if entered amount exceeds 50000
-    if (enteredAmount > 50000) {
+    if(enteredAmount > 50000) {
         alert('The entered amount cannot exceed 50000.');
         return;
     }
 
-            var priceGenerated = enteredAmount / seatingCapacity * 150;
-            var priceToBePaid = enteredAmount / seatingCapacity * 7;
+    var priceGenerated = enteredAmount / seatingCapacity * 150;
+    var priceToBePaid = enteredAmount / seatingCapacity * 7;
 
-            var upiId = '8008133117@ybl';
-            var theaterName = encodeURIComponent(document.getElementById('theater-name').value.trim());
-            var amount = priceToBePaid.toFixed(2);
-            var qrCodeData = `upi://pay?pa=${upiId}&pn=${theaterName}&am=${amount}&cu=INR`;
-            var qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeData)}`;
-            var qrImage = document.querySelector('.qr-code img');
-            qrImage.src = qrCodeUrl;
+    var upiId = '8008133117@ybl';
+    var theaterName = encodeURIComponent(document.getElementById('theater-name').value.trim());
+    var amount = priceToBePaid.toFixed(2);
+    var qrCodeData = `upi://pay?pa=${upiId}&pn=${theaterName}&am=${amount}&cu=INR`;
+    var qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrCodeData)}`;
+    var qrImage = document.querySelector('.qr-code img');
+    qrImage.src = qrCodeUrl;
 
-            var priceBox = document.getElementById('price-to-be-paid');
-            priceBox.textContent = 'Price to be paid: ₹' + priceToBePaid.toFixed(2) ;
+    var priceBox = document.getElementById('price-to-be-paid');
+    priceBox.textContent = 'Price to be paid: ₹' + priceToBePaid.toFixed(2);
 
-            // Display theater details
-            var theaterDetails = document.getElementById('theater-details');
-            theaterDetails.innerHTML = `
-                <h2>Theater Details</h2>
-                <p><strong>Theater Name:</strong> ${document.getElementById('theater-name').value.trim()}</p>
-                <p><strong>Seating Capacity:</strong> ${seatingCapacity}</p>
-                <p><strong>Amount Entered:</strong> ₹${enteredAmount.toFixed(2)}</p>
-                <p><strong>Date:</strong> ${document.getElementById('theater-date').value}</p>
-                <p><strong>Timings:</strong> ${document.getElementById('theater-timings').value}</p>
-                <p><strong>Address:</strong> ${document.getElementById('theater-address').value.trim()} <i class="fas fa-map-marker-alt fa-icon" id="view-map" title="View on Map"></i></p>
-                <p><strong>Your Name:</strong> ${document.getElementById('user-name').value.trim()}</p>
-                <p><strong>Mobile Number:</strong> ${document.getElementById('mobile-number').value.trim()}</p>
-                <p><strong>Email Address:</strong> ${document.getElementById('email-address').value.trim()}</p>
-                <p><strong>Generated Price:</strong> ₹${priceGenerated.toFixed(2)}</p>
-            `;
+    // Display theater details
+    var theaterDetails = document.getElementById('theater-details');
+    theaterDetails.innerHTML = `
+        <h2>Theater Details</h2>
+        <p><strong>Theater Name:</strong> ${document.getElementById('theater-name').value.trim()}</p>
+        <p><strong>Seating Capacity:</strong> ${seatingCapacity}</p>
+        <p><strong>Amount Entered:</strong> ₹${enteredAmount.toFixed(2)}</p>
+        <p><strong>Date:</strong> ${document.getElementById('theater-date').value}</p>
+        <p><strong>Timings:</strong> ${document.getElementById('theater-timings').value}</p>
+        <p><strong>Address:</strong> ${document.getElementById('theater-address').value.trim()} <i class="fas fa-map-marker-alt fa-icon" id="view-map" title="View on Map"></i></p>
+        <p><strong>Your Name:</strong> ${document.getElementById('user-name').value.trim()}</p>
+        <p><strong>Mobile Number:</strong> ${document.getElementById('mobile-number').value.trim()}</p>
+        <p><strong>Email Address:</strong> ${document.getElementById('email-address').value.trim()}</p>
+        <p><strong>Generated Price:</strong> ₹${priceGenerated.toFixed(2)}</p>
+        <button id="send-mail-btn" class="btn btn-primary">Send Mail</button>
+    `;
 
-            document.getElementById('payment-options').classList.add('active');
+    document.getElementById('payment-options').classList.add('active');
+
+    // Download text file
+    var downloadTextBtn = document.createElement('a');
+    var textContent = theaterDetails.textContent;
+    var textBlob = new Blob([textContent], { type: 'text/plain' });
+    downloadTextBtn.href = URL.createObjectURL(textBlob);
+    downloadTextBtn.download = 'theater_details.txt';
+    downloadTextBtn.click();
+
+    // Event listener for "View on Map" icon
+    document.getElementById('view-map').addEventListener('click', function() {
+        var address = document.getElementById('theater-address').value.trim();
+        var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+        window.open(mapUrl, '_blank');
+    });
+
+    // Event listener for "Send Mail" button
+    document.getElementById('send-mail-btn').addEventListener('click', sendEmail);
+function sendEmail() {
+    var uniqueCode = generateUniqueCode();
+    var theaterName = document.getElementById('theater-name').value.trim();
+    var seatingCapacity = document.getElementById('theater-capacity').value.trim();
+    var enteredAmount = document.getElementById('user-entered-amount').value.trim();
+    var date = document.getElementById('theater-date').value;
+    var timings = document.getElementById('theater-timings').value;
+    var address = document.getElementById('theater-address').value.trim();
+    var userName = document.getElementById('user-name').value.trim();
+    var mobileNumber = document.getElementById('mobile-number').value.trim();
+    var emailAddress = document.getElementById('email-address').value.trim();
+    var priceGenerated = (parseFloat(enteredAmount) / parseFloat(seatingCapacity)) * 150;
+    var emailContent = `Theater Name: ${theaterName}\nSeating Capacity: ${seatingCapacity}\nAmount Entered: ₹${enteredAmount}\nDate: ${date}\nTimings: ${timings}\nAddress: ${address}\nYour Name: ${userName}\nMobile Number: ${mobileNumber}\nEmail Address: ${emailAddress}\nGenerated Price: ₹${priceGenerated.toFixed(2)}\nUnique Code: ${uniqueCode}`;
+
+    // Sending email
+    var mailToLink = `mailto:imgtk17@gmail.com?subject=Theater%20Details&body=${encodeURIComponent(emailContent)}`;
+    window.open(mailToLink);
+}
 
 
-// Download text file
-            var downloadTextBtn = document.createElement('a');
-            var textContent = theaterDetails.textContent;
-            var textBlob = new Blob([textContent], { type: 'text/plain' });
-            downloadTextBtn.href = URL.createObjectURL(textBlob);
-            downloadTextBtn.download = 'theater_details.txt';
-            downloadTextBtn.click();
+});
 
-            
-       
-        });
-
-        // Open Google Maps when the map icon is clicked
-        document.getElementById('view-map').addEventListener('click', function(event) {
-            var address = document.getElementById('theater-address').value.trim();
-            var mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
-            window.open(mapUrl, '_blank');
-        });
-
-        // Enable/disable continue payment button based on form validation
-        function validateForm() {
-            var isValid = true;
-            var inputs = document.querySelectorAll('input[required]');
-            inputs.forEach(function(input) {
-                if (!input.value.trim()) {
-                    isValid = false;
-                }
-            });
-            document.getElementById('continue-payment-btn').disabled = !isValid;
-        }
-
-        var formInputs = document.querySelectorAll('input[required]');
-        formInputs.forEach(function(input) {
-            input.addEventListener('input', validateForm);
-        });
-
-        // Disable past dates in date picker
-        var today = new Date().toISOString().split('T')[0];
-        document.getElementById('theater-date').setAttribute('min', today);
+// Disable past dates in date picker
+var today = new Date().toISOString().split('T')[0];
+document.getElementById('theater-date').setAttribute('min', today);
     </script>
 </body>
 </html>
+
